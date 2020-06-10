@@ -1,5 +1,8 @@
-## 2.0.1+3
+## 2.0.1+9
 
+* Added `.showNotification = true/false` to hide dynamically displayed notification
+* Added custom action on notif click(android)
+* Added `isBuffering` to `RealtimePlayingInfos`
 * Added `AssetsAudioPlayerGroup` (beta)
 * Added Headers in `Audio.network` & `Audio.liveStream`
 
