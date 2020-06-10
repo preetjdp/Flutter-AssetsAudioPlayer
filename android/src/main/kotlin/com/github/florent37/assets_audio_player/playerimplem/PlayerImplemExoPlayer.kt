@@ -66,11 +66,11 @@ class PlayerImplemExoPlayer(
                 val userAgent = "assets_audio_player"
                 if(networkHeaders == null) {
                     return ProgressiveMediaSource
-                            .Factory(DefaultDataSourceFactory(context, userAgent), DefaultExtractorsFactory())
+                            .Factory(DefaultHttpDataSourceFactory(userAgent,DefaultHttpDataSource.DEFAULT_CONNECT_TIMEOUT_MILLIS,DefaultHttpDataSource.DEFAULT_READ_TIMEOUT_MILLIS,true), DefaultExtractorsFactory())
                             .createMediaSource(uri)
                 } else {
                     return ProgressiveMediaSource.Factory(DataSource.Factory {
-                        val dataSource = DefaultHttpDataSource(userAgent)
+                        val dataSource = DefaultHttpDataSource(userAgent,DefaultHttpDataSource.DEFAULT_CONNECT_TIMEOUT_MILLIS,DefaultHttpDataSource.DEFAULT_READ_TIMEOUT_MILLIS,true,null)
                         networkHeaders.forEach {
                             it.key?.let { key ->
                                 it.value?.let { value ->
