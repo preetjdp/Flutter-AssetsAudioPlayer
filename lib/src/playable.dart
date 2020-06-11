@@ -1,5 +1,6 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/foundation.dart';
+import 'package:uuid/uuid.dart';
 
 class Playable {}
 
@@ -74,21 +75,26 @@ class MetasImage {
   int get hashCode => path.hashCode ^ package.hashCode ^ type.hashCode;
 }
 
-@immutable
 class Metas {
+  String id;
   final String title;
   final String artist;
   final String album;
   final Map<String, dynamic> extra;
   final MetasImage image;
 
-  const Metas({
+  Metas({
+    this.id,
     this.title,
     this.artist,
     this.album,
     this.image,
     this.extra,
-  });
+  }) {
+    if (this.id == null) {
+      this.id = Uuid().v4();
+    }
+  }
 
   @override
   bool operator ==(Object other) =>
@@ -105,6 +111,7 @@ class Metas {
       title.hashCode ^ artist.hashCode ^ album.hashCode ^ image.hashCode;
 
   Metas copyWith({
+    String id,
     String title,
     String artist,
     String album,
@@ -112,6 +119,7 @@ class Metas {
     MetasImage image,
   }) {
     return new Metas(
+      id: id ?? this.id,
       title: title ?? this.title,
       artist: artist ?? this.artist,
       album: album ?? this.album,
@@ -176,6 +184,11 @@ class Audio implements Playable {
   @override
   int get hashCode =>
       path.hashCode ^ package.hashCode ^ audioType.hashCode ^ metas.hashCode;
+
+  @override
+  String toString() {
+    return 'Audio{path: $path, package: $package, audioType: $audioType, _metas: $_metas, _networkHeaders: $_networkHeaders}';
+  }
 
   void updateMetas({
     AssetsAudioPlayer player,
@@ -264,6 +277,9 @@ void writeAudioMetasInto(
       params["song.imageType"] = imageTypeDescription(metas.image.type);
       if (metas.image.package != null)
         params["song.imagePackage"] = metas.image.package;
+    }
+    if (metas.id != null) {
+      params["song.trackID"] = metas.id;
     }
   }
 }

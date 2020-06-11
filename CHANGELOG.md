@@ -1,9 +1,16 @@
-### 2.0.1+4
+## 2.0.2+1
 
+* Fixed `seek` and `seekBy` not working on the web
+
+## 2.0.2
+
+* Breaking change : `loop` boolean now enumerate 3 values : `none`, `single` and `playlist`
+
+## 2.0.1+9
+
+* Added `.showNotification = true/false` to hide dynamically displayed notification
+* Added custom action on notif click(android)
 * Added `isBuffering` to `RealtimePlayingInfos`
-
-## 2.0.1+3
-
 * Added `AssetsAudioPlayerGroup` (beta)
 * Added Headers in `Audio.network` & `Audio.liveStream`
 
